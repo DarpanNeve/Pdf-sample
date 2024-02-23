@@ -13,14 +13,12 @@ void fetchDataAndCreatePdf() async {
   final databaseReference = FirebaseFirestore.instance.collection('data').get();
   databaseReference.then((value) {
     List<DataModel> data = [];
-    int totalAmount= 0;
+    int totalAmount = 0;
     for (var element in value.docs) {
       data.add(DataModel.fromJson(element.data()));
     }
     createPdf(data);
   });
-
-
 }
 
 void createPdf(var data) async {
@@ -60,10 +58,8 @@ void createPdf(var data) async {
       ])),
     ),
   );
-
   final output = await getExternalStorageDirectory();
   print('Output directory: ${output!.path}'); // Debug statement
-
   final file = File("${output.path}/example.pdf");
   print(file.path); // Debug statement
   await file.writeAsBytes(await pdf.save());
